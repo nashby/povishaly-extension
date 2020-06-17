@@ -1,9 +1,9 @@
 {
   "manifest_version": 2,
 
-  "name": "Повышалы",
+  "name": "Povishaly",
   "version": "0.1.0",
-  "description": "Изменение цен на https://r.onliner.by/",
+  "description": "Shows price history on the real estate site https://r.onliner.by/",
 
   "permissions": [
     "https://povishaly.space"
@@ -18,6 +18,9 @@
   "content_scripts": [{
     "css": ["styles.css"],
     "js": ["content.js"],
-    "matches": ["https://r.onliner.by/pk/apartments/*"]
+    "matches": [
+      "https://r.onliner.by/pk/apartments/*",
+      "https://r.onliner.by/ak/apartments/*"
+    ]
   }]
 }

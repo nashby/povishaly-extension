@@ -20,8 +20,15 @@ const formatPrices = function(pricesJson) {
 const addOldPrices = function() {
   const urlParts = window.location.href.split('/');
   const onlinerId = urlParts[urlParts.length - 1];
+  var appartmentType;
 
-  fetch(`https://povishaly.space/appartments/${onlinerId}`)
+  if (window.location.href.search('/pk/') != -1) {
+    appartmentType = 'appartments';
+  } else {
+    appartmentType = 'rental_appartments';
+  }
+
+  fetch(`https://povishaly.space/${appartmentType}/${onlinerId}`)
     .then((response) => {
       return response.json();
     })
