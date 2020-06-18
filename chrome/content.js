@@ -17,15 +17,28 @@ const formatPrices = function(pricesJson) {
   return str;
 }
 
+const addSqMeterPrice = function() {
+  const priceNode = document.querySelector('.apartment-bar__price-value_complementary');
+  const price = parseInt(priceNode.textContent.replace(/\s|\$/g, ''));
+  const area = parseFloat(document.querySelectorAll('.apartment-options-table__cell_right')[1].textContent.replace(',', '.'));
+
+  const sqMeterPrice = Math.round(price / area);
+
+  var priceText = priceNode.innerHTML;
+  priceText = priceText.replace(/\n/g, '')
+
+  priceNode.innerHTML = `\n${priceText} (${sqMeterPrice} $/m2) \n` ;
+}
+
 const addOldPrices = function() {
   const urlParts = window.location.href.split('/');
   const onlinerId = urlParts[urlParts.length - 1];
   var appartmentType;
 
-  if (window.location.href.search('/pk/') != -1) {
-    appartmentType = 'appartments';
-  } else {
+  if (isRental()) {
     appartmentType = 'rental_appartments';
+  } else {
+    appartmentType = 'appartments';
   }
 
   fetch(`https://povishaly.space/${appartmentType}/${onlinerId}`)
@@ -43,6 +56,14 @@ const addOldPrices = function() {
         rightPart.style.height = `${pricePart.offsetHeight}px`;
       }
     });
+}
+
+const isRental = function() {
+  return window.location.href.search('/ak/') != -1;
+}
+
+if (!isRental()) {
+  addSqMeterPrice();
 }
 
 addOldPrices();
